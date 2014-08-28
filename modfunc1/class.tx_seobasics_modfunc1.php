@@ -50,7 +50,9 @@ class tx_seobasics_modfunc1 extends t3lib_extobjbase {
 	 * @return	array
 	 */
 	function init(&$pObj, $conf) {
-		$pObj->doc->divClass = 'typo3-fullDoc';
+		if($pObj->doc instanceof \TYPO3\CMS\Backend\Template\DocumentTemplate) {
+			$pObj->doc->divClass = 'typo3-fullDoc';
+		}
 
 			// load languages
 		$trans = t3lib_div::makeInstance('t3lib_transl8tools');

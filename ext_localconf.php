@@ -18,11 +18,21 @@ if ($extconf['sourceFormatting'] == '1') {
 
 	// registering sitemap.xml for each hierachy of configuration to realurl (meaning to every website in a multisite installation)
 if ($extconf['xmlSitemap'] == '1') {
+	$realurl_hooklist = array(
+		'encodeSpURL_postProc',
+		'decodeSpURL_preProc',
+		'getHost'
+	);
 	$realurl = $TYPO3_CONF_VARS['EXTCONF']['realurl'];
 	if (is_array($realurl))	{
 		foreach ($realurl as $host => $cnf) {
 			// we won't do anything with string pointer (e.g. example.org => www.example.org)
 			if (!is_array($realurl[$host])) {
+				continue;
+			}
+
+			// exclude realurl hooks from configuration
+			if (in_array($host, $realurl_hooklist)) {
 				continue;
 			}
 			
